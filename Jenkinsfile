@@ -61,21 +61,21 @@ pipeline {
                 echo 'Building Next image...'
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-                        def customImage = docker.build(NEXTJS_DOCKER_TAG)
+                        def customImage = docker.build(NEXTJS_DOCKER_TAG,'-f next-advance/Dockerfile .')
                         customImage.push()
                     }
                 }
                 echo 'Building Node image...'
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-                        def customImage = docker.build(NODEJS_DOCKER_TAG)
+                        def customImage = docker.build(NODEJS_DOCKER_TAG,'-f node-advance/Dockerfile .')
                         customImage.push()
                     }
                 }
                 echo 'Building Mongo image...'
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-                        def customImage = docker.build(MONGODB_DOCKER_TAG)
+                        def customImage = docker.build(MONGODB_DOCKER_TAG,'-f mongodb/Dockerfile .')
                         customImage.push()
                     }
                 }
