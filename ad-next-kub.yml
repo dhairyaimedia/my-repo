@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: advance-nextjs-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8-nextjs-app
+  template:
+    metadata:
+      labels:
+        app: k8-nextjs-app
+    spec:
+      containers:
+        - name: nextjs-container
+          image: dhairyadockerhub/ad-next:8
+          # env:
+          #   - name: NEXT_PUBLIC_BASE_URL
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: config-map-next
+          #         key: NEXT_PUBLIC_BASE_URL           
+          #   - name: NEXT_PUBLIC_BASE_PORT
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: config-map-next
+          #         key: NEXT_PUBLIC_BASE_PORT
+          #   - name: NEXT_PUBLIC_ENV_JEET
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: config-map-next
+          #         key: NEXT_PUBLIC_ENV_JEET
+          ports:
+          - containerPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: advance-nextjs-service
+spec:
+  selector:
+    app: k8-nextjs-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer

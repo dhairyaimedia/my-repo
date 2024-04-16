@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  node-advance:
+    build:
+      context: ./node-advance
+      dockerfile: Dockerfile
+    ports:
+      - "5555:5555"  # Map host port 3001 to container port 3000
+    depends_on:
+      - mongodb
+
+  mongodb:
+    build:
+      context: ./mongodb
+      dockerfile: Dockerfile
+    ports:
+      - "27017:27017"
+  
+  next-advance:
+    build:
+      context: ./next-advance
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Map host port 3000 to container port 3000

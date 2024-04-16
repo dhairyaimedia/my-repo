@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: advance-mongodb-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8-mongodb-app
+  template:
+    metadata:
+      labels:
+        app: k8-mongodb-app
+    spec:
+      containers:
+      - name: nodejs-container
+        image: dhairyadockerhub/ad-mongo:7
+        ports:
+        - containerPort: 27017
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: advance-mongodb-service
+spec:
+  selector:
+    app: k8-mongodb-app
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+  # type: ClusterIP
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: advance-mongodb-app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: k8-mongodb-app
+#   template:
+#     metadata:
+#       labels:
+#         app: k8-mongodb-app
+#     spec:
+#       containers:
+#       - name: mongo-container
+#         image: mongo:latest
+
+# ---
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: advance-mongodb-service
+# spec:
+#   selector:
+#     app: k8-mongodb-app
+#   ports:
+#     - name: tcp
+#       port: 27017
+#       targetPort: 27017
