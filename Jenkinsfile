@@ -75,7 +75,7 @@ pipeline {
                 echo 'Building Mongo image...'
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
-                        def customImage = docker.build(MONGODB_DOCKER_TAG,'./mongo/')
+                        def customImage = docker.build(MONGODB_DOCKER_TAG,'./mongodb/')
                         customImage.push()
                     }
                 }
