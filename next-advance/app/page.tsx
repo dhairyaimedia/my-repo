@@ -42,7 +42,7 @@ export default function Home() {
     }
   }
   return (<>
-  <div style={{display: "flex", justifyContent:"center"}}>Everything is changed completely again</div>
+  <div style={{display: "flex", justifyContent:"center"}}>Task complete</div>
     <div style={{ display: "flex", justifyContent: "center", margin: "3rem" }}>
       <button onClick={handleClick}>Get Users data</button>
     </div>
