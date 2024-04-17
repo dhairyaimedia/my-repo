@@ -95,12 +95,6 @@ pipeline {
                 sh 'kubectl apply -f ad-node-kub.yml'
                 echo 'Deploying Nextjs'
                 sh 'kubectl apply -f ad-mongo-kub.yml'
-                echo 'Running MongoDB'
-                sh 'minikube service advance-mongodb-service'
-                echo 'Running Nodejs'
-                sh 'minikube service advance-nodejs-service'
-                echo 'Running Nextjs'
-                sh 'minikube service advance-nextjs-service'
                 // sshCommand remote: remote, command: "echo 'very well done'"
                 // sshCommand remote: remote, command: "docker rm next-app -f | true"
                 // sshCommand remote: remote, command: "docker rmi -f ${DOCKER_IMAGE}:${LATEST_VERSION} | true"
@@ -108,7 +102,29 @@ pipeline {
                 // sshCommand remote: remote, command: "docker run -d -p 4000:3000 --name next-app ${DOCKER_TAG}"
             }
         }
+
+        stage('Waiting....') {
+            steps {
+                script {
+                    // Wait for 1 minute (60 seconds)
+                    sleep(time: 40, unit: 'SECONDS')
+                }
+            }
+        }
+
+        stage('Running the Application') {
+            steps {
+                echo 'Running MongoDB'
+                sh 'minikube service advance-mongodb-service'
+                echo 'Running Nodejs'
+                sh 'minikube service advance-nodejs-service'
+                echo 'Running Nextjs'
+                sh 'minikube service advance-nextjs-service'
+            }
+        }
     }
+
+
     
     post {
         success {
