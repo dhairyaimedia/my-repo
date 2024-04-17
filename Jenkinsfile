@@ -19,19 +19,19 @@ pipeline {
 
     environment {
         NEXTJS_DOCKER_IMAGE = "dhairyadockerhub/ad-next"
-        NEXTJS_LATEST_VERSION = sh(script: 'curl -s "https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-next/tags/" | jq -r \'.results[].name | select(test("^[0-9]+$")) | tonumber\' | sort -rn | head -n1', returnStdout: true).trim()
+        NEXTJS_LATEST_VERSION = sh(script: 'curl -s "https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-next/tags/" | jq -r '.results[].name | select(test("^[0-9]+$")) | tonumber' | sort -rn | head -n1', returnStdout: true).trim()
         NEXTJS_NEXT_VERSION = "${NEXTJS_LATEST_VERSION.toInteger() + 1}"
-        NEXTJS_DOCKER_TAG = "${NEXTJS_DOCKER_IMAGE}:${NEXTJS_DOCKER_IMAGE}"
+        NEXTJS_DOCKER_TAG = "${NEXTJS_DOCKER_IMAGE}:${NEXTJS_NEXT_VERSION}"
 
         NODEJS_DOCKER_IMAGE = "dhairyadockerhub/ad-node"
-        NODEJS_LATEST_VERSION = sh(script: 'curl -s "https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-node/tags/" | jq -r \'.results[].name | select(test("^[0-9]+$")) | tonumber\' | sort -rn | head -n1', returnStdout: true).trim()
+        NODEJS_LATEST_VERSION = sh(script: 'curl -s "https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-node/tags/" | jq -r '.results[].name | select(test("^[0-9]+$")) | tonumber' | sort -rn | head -n1', returnStdout: true).trim()
         NODEJS_NEXT_VERSION = "${NODEJS_LATEST_VERSION.toInteger() + 1}"
-        NODEJS_DOCKER_TAG = "${NODEJS_DOCKER_IMAGE}:${NEXTJS_DOCKER_IMAGE}"
+        NODEJS_DOCKER_TAG = "${NODEJS_DOCKER_IMAGE}:${NODEJS_NEXT_VERSION}"
 
         MONGODB_DOCKER_IMAGE = "dhairyadockerhub/ad-mongo"
-        MONGODB_LATEST_VERSION = sh(script: 'curl -s "https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-mongo/tags/" | jq -r \'.results[].name | select(test("^[0-9]+$")) | tonumber\' | sort -rn | head -n1', returnStdout: true).trim()
+        MONGODB_LATEST_VERSION = sh(script: 'curl -s "https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-mongo/tags/" | jq -r '.results[].name | select(test("^[0-9]+$")) | tonumber' | sort -rn | head -n1', returnStdout: true).trim()
         MONGODB_NEXT_VERSION = "${MONGODB_LATEST_VERSION.toInteger() + 1}"
-        MONGODB_DOCKER_TAG = "${MONGODB_DOCKER_IMAGE}:${NEXTJS_DOCKER_IMAGE}"
+        MONGODB_DOCKER_TAG = "${MONGODB_DOCKER_IMAGE}:${MONGODB_NEXT_VERSION}"
     }
 
     stages {
