@@ -21,17 +21,17 @@ pipeline {
         NEXTJS_DOCKER_IMAGE = "dhairyadockerhub/ad-next"
         NEXTJS_LATEST_VERSION = sh(script: "curl -s \"https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-next/tags/\" | jq -r '.results | map(.name) | sort | reverse | .[0]'", returnStdout: true).trim()
         NEXTJS_NEXT_VERSION = "${NEXTJS_LATEST_VERSION.toInteger() + 1}"
-        NEXTJS_DOCKER_TAG = "${NEXTJS_DOCKER_IMAGE}:27"
+        NEXTJS_DOCKER_TAG = "${NEXTJS_DOCKER_IMAGE}:${NEXTJS_NEXT_VERSION}"
 
         NODEJS_DOCKER_IMAGE = "dhairyadockerhub/ad-node"
         NODEJS_LATEST_VERSION = sh(script: "curl -s \"https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-node/tags/\" | jq -r '.results | map(.name) | sort | reverse | .[0]'", returnStdout: true).trim()
         NODEJS_NEXT_VERSION = "${NODEJS_LATEST_VERSION.toInteger() + 1}"
-        NODEJS_DOCKER_TAG = "${NODEJS_DOCKER_IMAGE}:27"
+        NODEJS_DOCKER_TAG = "${NODEJS_DOCKER_IMAGE}:${NODEJS_NEXT_VERSION}"
 
         MONGODB_DOCKER_IMAGE = "dhairyadockerhub/ad-mongo"
         MONGODB_LATEST_VERSION = sh(script: "curl -s \"https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-mongo/tags/\" | jq -r '.results | map(.name) | sort | reverse | .[0]'", returnStdout: true).trim()
         MONGODB_NEXT_VERSION = "${MONGODB_LATEST_VERSION.toInteger() + 1}"
-        MONGODB_DOCKER_TAG = "${MONGODB_DOCKER_IMAGE}:27"
+        MONGODB_DOCKER_TAG = "${MONGODB_DOCKER_IMAGE}:${MONGODB_NEXT_VERSION}"
     }
 
     stages {
@@ -60,11 +60,6 @@ pipeline {
         //     }
         // }
         
-        stage('Running shell script') {
-            steps {
-                sh './shell-script.sh'
-            }
-        }
 
         stage('Dockerize') {
             steps {
@@ -93,22 +88,27 @@ pipeline {
             }
         }
         
-
-        stage('Deploy to Kubernetes') {
+        stage('Running shell script') {
             steps {
-                echo 'Deploying Nextjs'
-                sh 'kubectl apply -f ad-next-kub.yml'
-                echo 'Deploying Nextjs'
-                sh 'kubectl apply -f ad-node-kub.yml'
-                echo 'Deploying Nextjs'
-                sh 'kubectl apply -f ad-mongo-kub.yml'
-                // sshCommand remote: remote, command: "echo 'very well done'"
-                // sshCommand remote: remote, command: "docker rm next-app -f | true"
-                // sshCommand remote: remote, command: "docker rmi -f ${DOCKER_IMAGE}:${LATEST_VERSION} | true"
-                // sshCommand remote: remote, command: "docker pull ${DOCKER_TAG}"
-                // sshCommand remote: remote, command: "docker run -d -p 4000:3000 --name next-app ${DOCKER_TAG}"
+                sh './shell-script.sh'
             }
         }
+
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         echo 'Deploying Nextjs'
+        //         sh 'kubectl apply -f ad-next-kub.yml'
+        //         echo 'Deploying Nextjs'
+        //         sh 'kubectl apply -f ad-node-kub.yml'
+        //         echo 'Deploying Nextjs'
+        //         sh 'kubectl apply -f ad-mongo-kub.yml'
+        //         // sshCommand remote: remote, command: "echo 'very well done'"
+        //         // sshCommand remote: remote, command: "docker rm next-app -f | true"
+        //         // sshCommand remote: remote, command: "docker rmi -f ${DOCKER_IMAGE}:${LATEST_VERSION} | true"
+        //         // sshCommand remote: remote, command: "docker pull ${DOCKER_TAG}"
+        //         // sshCommand remote: remote, command: "docker run -d -p 4000:3000 --name next-app ${DOCKER_TAG}"
+        //     }
+        // }
 
         stage('Waiting....') {
             steps {
