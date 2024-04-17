@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nodejs-container
-          image: dhairyadockerhub/ad-node:25
+          image: dhairyadockerhub/ad-node:26
           # resources:
           #   requests:
               # memory: "64Mi"
