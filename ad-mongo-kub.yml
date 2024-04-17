@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nodejs-container
-        image: dhairyadockerhub/ad-mongo:26
+        image: dhairyadockerhub/ad-mongo:27
         ports:
         - containerPort: 27017
 

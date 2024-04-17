@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nextjs-container
-          image: dhairyadockerhub/ad-next:26
+          image: dhairyadockerhub/ad-next:27
           # env:
           #   - name: NEXT_PUBLIC_BASE_URL
           #     valueFrom:
