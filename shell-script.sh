@@ -12,9 +12,9 @@ sed -i "s|image: dhairyadockerhub/ad-next:.*$|image: dhairyadockerhub/ad-next:$n
 sed -i "s|image: dhairyadockerhub/ad-next:.*$|image: dhairyadockerhub/ad-next:$next_latest_tag|" ad-next-kub.yml
 
 # Apply updated YAML to Kubernetes cluster
-kubectl delete service advance-mongodb-service
-kubectl delete service advance-nodejs-service
-kubectl delete service advance-nextjs-service
+# kubectl delete service advance-mongodb-service
+# kubectl delete service advance-nodejs-service
+# kubectl delete service advance-nextjs-service
 
 kubectl apply -f ad-mongo-kub.yml
 kubectl apply -f ad-node-kub.yml
