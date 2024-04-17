@@ -42,7 +42,7 @@ export default function Home() {
     }
   }
   return (<>
-  <div style={{display: "flex", justifyContent:"center"}}>Task completed pushing 6</div>
+  <div style={{display: "flex", justifyContent:"center"}}>Task completed successfully</div>
     <div style={{ display: "flex", justifyContent: "center", margin: "3rem" }}>
       <button onClick={handleClick}>Get Users data</button>
     </div>

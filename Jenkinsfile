@@ -122,10 +122,13 @@ pipeline {
         stage('Running the Application') {
             steps {
                 echo 'Running MongoDB'
+                sh 'kubectl delete service advance-mongodb-service | true'
                 sh 'minikube service advance-mongodb-service --url'
                 echo 'Running Nodejs'
+                sh 'kubectl delete service advance-nodejs-service | true'
                 sh 'minikube service advance-nodejs-service --url'
                 echo 'Running Nextjs'
+                sh 'kubectl delete service advance-nextjs-service | true'
                 sh 'minikube service advance-nextjs-service --url'
                 script {
                     def command = 'xdg-open http://frontend-domain.com'
