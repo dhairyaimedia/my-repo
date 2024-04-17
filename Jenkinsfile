@@ -87,6 +87,12 @@ pipeline {
             }
         }
         
+        stage('Running shell script') {
+            steps {
+                sh 'shell-script.sh'
+            }
+        }
+
         stage('Deploy to Kubernetes') {
             steps {
                 echo 'Deploying Nextjs'
@@ -121,7 +127,7 @@ pipeline {
                 echo 'Running Nextjs'
                 sh 'minikube service advance-nextjs-service --url'
                 script {
-                    def command = 'xdg-open https://frontend-domain.com'
+                    def command = 'xdg-open http://frontend-domain.com'
                     sh command
                 }
             }
