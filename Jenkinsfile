@@ -6,8 +6,12 @@ remote.password = 'iMedia@009'
 remote.allowAnyHosts = true
 
 pipeline {
-    agent any
-
+    // agent any
+    agent {
+        kubernetes {
+            label 'my-kubernetes-agent'
+        }
+    }
     tools {
         nodejs "my-nodejs"
         dockerTool 'my-docker'
@@ -83,16 +87,21 @@ pipeline {
             }
         }
         
-        // stage('Deploy') {
-        //     steps {
-        //         echo 'Deploying the project...'
-        //         sshCommand remote: remote, command: "echo 'very well done'"
-        //         sshCommand remote: remote, command: "docker rm next-app -f | true"
-        //         sshCommand remote: remote, command: "docker rmi -f ${DOCKER_IMAGE}:${LATEST_VERSION} | true"
-        //         sshCommand remote: remote, command: "docker pull ${DOCKER_TAG}"
-        //         sshCommand remote: remote, command: "docker run -d -p 4000:3000 --name next-app ${DOCKER_TAG}"
-        //     }
-        // }
+        stage('Deploy to Kubernetes') {
+            steps {
+                echo 'Deploying Nextjs'
+                sh 'kubectl apply -f ad-next-kub.yml'
+                echo 'Deploying Nextjs'
+                sh 'kubectl apply -f ad-node-kub.yml'
+                echo 'Deploying Nextjs'
+                sh 'kubectl apply -f ad-mongo-kub.yml'
+                // sshCommand remote: remote, command: "echo 'very well done'"
+                // sshCommand remote: remote, command: "docker rm next-app -f | true"
+                // sshCommand remote: remote, command: "docker rmi -f ${DOCKER_IMAGE}:${LATEST_VERSION} | true"
+                // sshCommand remote: remote, command: "docker pull ${DOCKER_TAG}"
+                // sshCommand remote: remote, command: "docker run -d -p 4000:3000 --name next-app ${DOCKER_TAG}"
+            }
+        }
     }
     
     post {
