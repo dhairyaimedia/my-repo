@@ -95,6 +95,12 @@ pipeline {
                 sh 'kubectl apply -f ad-node-kub.yml'
                 echo 'Deploying Nextjs'
                 sh 'kubectl apply -f ad-mongo-kub.yml'
+                echo 'Running MongoDB'
+                sh 'minikube service advance-mongodb-service'
+                echo 'Running Nodejs'
+                sh 'minikube service advance-nodejs-service'
+                echo 'Running Nextjs'
+                sh 'minikube service advance-nextjs-service'
                 // sshCommand remote: remote, command: "echo 'very well done'"
                 // sshCommand remote: remote, command: "docker rm next-app -f | true"
                 // sshCommand remote: remote, command: "docker rmi -f ${DOCKER_IMAGE}:${LATEST_VERSION} | true"
