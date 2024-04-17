@@ -6,12 +6,12 @@ remote.password = 'iMedia@009'
 remote.allowAnyHosts = true
 
 pipeline {
-    // agent any
-    agent {
-        kubernetes {
-            label 'my-kubernetes-agent'
-        }
-    }
+    agent any
+    // agent {
+    //     kubernetes {
+    //         label 'my-kubernetes-agent'
+    //     }
+    // }
     tools {
         nodejs "my-nodejs"
         dockerTool 'my-docker'
