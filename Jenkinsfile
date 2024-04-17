@@ -21,17 +21,17 @@ pipeline {
         NEXTJS_DOCKER_IMAGE = "dhairyadockerhub/ad-next"
         NEXTJS_LATEST_VERSION = sh(script: "curl -s \"https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-next/tags/\" | jq -r '.results | map(.name) | sort | reverse | .[0]'", returnStdout: true).trim()
         NEXTJS_NEXT_VERSION = "${NEXTJS_LATEST_VERSION.toInteger() + 1}"
-        NEXTJS_DOCKER_TAG = "${NEXTJS_DOCKER_IMAGE}:24"
+        NEXTJS_DOCKER_TAG = "${NEXTJS_DOCKER_IMAGE}:25"
 
         NODEJS_DOCKER_IMAGE = "dhairyadockerhub/ad-node"
         NODEJS_LATEST_VERSION = sh(script: "curl -s \"https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-node/tags/\" | jq -r '.results | map(.name) | sort | reverse | .[0]'", returnStdout: true).trim()
         NODEJS_NEXT_VERSION = "${NODEJS_LATEST_VERSION.toInteger() + 1}"
-        NODEJS_DOCKER_TAG = "${NODEJS_DOCKER_IMAGE}:24"
+        NODEJS_DOCKER_TAG = "${NODEJS_DOCKER_IMAGE}:25"
 
         MONGODB_DOCKER_IMAGE = "dhairyadockerhub/ad-mongo"
         MONGODB_LATEST_VERSION = sh(script: "curl -s \"https://registry.hub.docker.com/v2/repositories/dhairyadockerhub/ad-mongo/tags/\" | jq -r '.results | map(.name) | sort | reverse | .[0]'", returnStdout: true).trim()
         MONGODB_NEXT_VERSION = "${MONGODB_LATEST_VERSION.toInteger() + 1}"
-        MONGODB_DOCKER_TAG = "${MONGODB_DOCKER_IMAGE}:24"
+        MONGODB_DOCKER_TAG = "${MONGODB_DOCKER_IMAGE}:25"
     }
 
     stages {
